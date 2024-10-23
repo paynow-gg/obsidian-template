@@ -210,8 +210,13 @@
                     "name": "Facebook Link",
                     "default": "",
                     "type": "textarea"
+                },
+                {
+                  "id": "tiktok",
+                  "name": "Tiktok Link",
+                  "default": "",
+                  "type": "textarea"
                 }
-                
             ]
         }
     ]
