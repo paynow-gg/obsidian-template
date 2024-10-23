@@ -3,7 +3,7 @@
     "updates": {
         "supported": true,
         "version_check_supported": true,
-        "version": "1.0.2",
+        "version": "1.0.3",
         "github_url": "https://github.com/paynow-gg/obsidian-template",
         "github_branch": "main"
     },
@@ -167,6 +167,13 @@
                   "description": "A fontawesome icon ID to show in the navbar (example: fa-circle-info)",
                   "default": "fa-circle-info",
                   "type": "textarea"
+                },
+                {
+                  "id": "settings",
+                  "name": "Don't show in navigation",
+                  "description": "If enabled this custom page wont show in navbar",
+                  "type": "toggle",
+                  "default": false
                 }
               ]
             }
