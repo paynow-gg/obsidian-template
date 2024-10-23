@@ -109,7 +109,7 @@
                     {% else %}
                     <a href="/auth/sign-in">
                         <div class="font-[Rajdhani] font-semibold header-item !px-2">
-                            <span class="uppercase truncate mr-2">Sign in</span>
+                            <span class="uppercase mr-2">Sign in</span>
                             <i class="fa-solid fa-right-to-bracket"></i>
                         </div>
                     </a>
@@ -140,7 +140,7 @@
 
     <div class="container mx-auto !min-h-[calc(100vh-16.5rem)]">
         <div class="nav topbar mb-4 mt-5">
-            <ul class="flex flex-col lg:flex-row flex-wrap items-center h-full gap-10 tracking-wide">
+            <ul class="inline-flex flex-wrap items-center h-full gap-10 tracking-wide">
                 <li class="nav-item {% if request.path == "/" %}active{% endif %}">
                     <a href="/">
                         <div class="nav-icon">
@@ -151,28 +151,27 @@
                 </li>
 
                 {% for navlink in navlinks %}
-                <li class="nav-item {% if activeRootNavlink.node_id == navlink.node_id %}active{% endif %}">
-                    <div class="relative inline-block text-left">
-                        <a class="flex items-center" href="{% if navlink.children|length > 0 %}#{% else %}/products?tag={{ navlink.tag_query }}{% endif %}" onclick="toggleDropdown('{{ navlink.node_id }}')">
-                            <div class="nav-icon">
-                                <i class="fa-solid fa-box-open"></i>
-                            </div>
-
-                            {{ navlink.name }}
-
-                            {% if navlink.children|length > 0 %}
-                            <i class="fa-solid fa-chevron-down"></i>
-                            {% endif %}
-                        </a>
-
+            <li class="nav-item {% if activeRootNavlink.node_id == navlink.node_id %}active{% endif %}">
+                <div class="relative inline-block text-left">
+                    <a class="flex items-center" href="{% if navlink.children|length > 0 %}#{% else %}/products?tag={{ navlink.tag_query }}{% endif %}" onclick="toggleDropdown('{{ navlink.node_id }}')">
+                        <div class="nav-icon">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        {{ navlink.name }}
                         {% if navlink.children|length > 0 %}
-                        {% include 'menu-links.html' with {'navlink': navlink, 'activeNavlink': activeNavlink} only %}
+                        <i class="fa-solid fa-chevron-down"></i>
                         {% endif %}
-                    </div>
-                </li>
-                {% endfor %}
+                    </a>
 
-                {% for custom_page in custom_pages %}
+                    {% if navlink.children|length > 0 %}
+                    {% include 'menu-links.html' with {'navlink': navlink, 'activeNavlink': activeNavlink} only %}
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+
+            {% for custom_page in custom_pages %}
+                {% if not custom_page.settings %} ->
                     {% if custom_page.path starts with '/' %}
                         {% set page_parsed_path = custom_page.path %}
                     {% else %}
@@ -187,7 +186,8 @@
                             {{ custom_page.title }}
                         </a>
                     </li>
-                {% endfor %}
+                {% endif %}
+            {% endfor %}
 
                 {% if supports_customer_management %}
                 <li class="nav-item {% if request.path starts with "/account" %}active{% endif %}">
@@ -202,11 +202,11 @@
             </ul>
         </div>
 
-        {% if config("banner") == "true" and (not config("banner_only_home") == "true" or request.path == "/") %}
+        {% if config("banner") == "true" and (not config("banner_only_home") or request.path == "/") %}
         <a class="{% if not config("banner_link") %}pointer-events-none{% endif %}" href="{{ config("banner_link") }}">
             <div class="relative w-full h-[192px] mb-4 mt-3 rounded-lg">
                 <img class="object-cover w-full h-full" src="{{ config("banner_img") }}">
-                <h1 class="text-6xl font-[Rajdhani] block max-w-full px-2 truncate absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">{{ config("banner_text") }}</h1>
+                <h1 class="text-6xl font-[Rajdhani] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">{{ config("banner_text") }}</h1>
             </div>
         </a>
         {% endif %}
