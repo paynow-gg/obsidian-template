@@ -49,7 +49,7 @@
             <div class="product-bot mt-4">
                 <div class="product-small-description">
 
-                    {% if available_gameservers %}
+                    {% if product.single_game_server_only %}
                     <div class="small-title">
                         <i class="fa-solid fa-server text-[--main-color]"></i>
                         <span class="min-w-[140px] ml-1">Game Server</span>
@@ -58,12 +58,32 @@
                 
                     <div class="mt-2 mb-4">
                         <select id="gameServerDropdown" name="gameServer" class="form-select block w-full pl-3 pr-10 py-2 text-base bg-[--panel-body] border border-[--border-color] sm:text-sm rounded-md shadow-md">
-                            {% for gameServer in available_gameservers %}
+                            {% for gameServer in product.gameservers %}
                                 <option value="{{ gameServer.id }}">{{ gameServer.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     {% endif %}
+
+                    {% for custom_variable in product.custom_variables %}
+                    <div class="small-title">
+                        <i class="fa-solid fa-gear text-[--main-color]"></i>
+                        <span class="min-w-[140px] ml-1">{{ custom_variable.name }}</span>
+                        <span class="product-det-border"></span>
+                    </div>
+                
+                    <div class="mt-2 mb-4">
+                        {% if custom_variable.type == "dropdown" %}
+                            <select id="customVariables[{{ custom_variable.identifier }}]" name="{{ custom_variable.identifier }}" class="form-select block w-full pl-3 pr-10 py-2 text-base bg-[--panel-body] border border-[--border-color] sm:text-sm rounded-md shadow-md">
+                                {% for option in custom_variable.options %}
+                                    <option value="{{ option.value }}">{{ option.name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <input type="{{ custom_variable.type }}" pattern="{{ custom_variable.value_regex }}" required id="customVariables[{{ custom_variable.identifier }}]" name="{{ custom_variable.identifier }}" placeholder="{{ custom_variable.description }}" class="form-select block w-full placeholder:opacity-50 pl-3 pr-10 py-2 text-base bg-[--panel-body] border border-[--border-color] sm:text-sm rounded-md shadow-md" />
+                        {% endif %}
+                    </div>
+                    {% endfor %}
 
                     <div class="small-title">
                         <i class="fa-solid fa-basket-shopping text-[--main-color]"></i>
