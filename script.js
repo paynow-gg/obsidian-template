@@ -51,6 +51,7 @@ window.onclick = function (event) {
 function subscribeToProduct() {
     var productSlug = document.querySelector("[data-product-slug]").getAttribute("data-product-slug");
     var gameServerId = document.getElementById('gameServerDropdown')?.value;
+    var customVariableInputs = document.querySelectorAll('select[id^="customVariables"], input[id^="customVariables"]');
 
     const query = new URLSearchParams({
         subscription: true
@@ -59,6 +60,9 @@ function subscribeToProduct() {
     if (gameServerId) {
         query.set('gameserver_id', gameServerId);
     }
+    customVariableInputs?.forEach(input => {
+        query.set(`custom_variables[${input.name}]`, input.value)
+    });
 
     const checkoutUrl = `/products/${productSlug}/checkout?${query.toString()}`;
     window.location.href = checkoutUrl;
@@ -67,11 +71,15 @@ function subscribeToProduct() {
 function addProductToCart() {
     var productSlug = document.querySelector("[data-product-slug]").getAttribute("data-product-slug");
     var gameServerId = document.getElementById('gameServerDropdown')?.value;
+    var customVariableInputs = document.querySelectorAll('select[id^="customVariables"], input[id^="customVariables"]');
 
     const query = new URLSearchParams();
     if (gameServerId) {
         query.set('gameserver_id', gameServerId);
     }
+    customVariableInputs?.forEach(input => {
+        query.set(`custom_variables[${input.name}]`, input.value)
+    });
 
     const checkoutUrl = `/cart/add/${productSlug}?${query.toString()}`;
     window.location.href = checkoutUrl;
@@ -108,6 +116,7 @@ function handlePurchase(platform) {
     var id = idInput.value.trim();
     var productSlug = document.querySelector("[data-product-slug]").getAttribute("data-product-slug");
     var gameServerId = document.getElementById('gameServerDropdown')?.value;
+    var customVariableInputs = document.querySelectorAll('select[id^="customVariables"], input[id^="customVariables"]');
 
     const query = new URLSearchParams({
         "gift_to": id,
@@ -122,6 +131,9 @@ function handlePurchase(platform) {
     if (gameServerId) {
         query.set('gameserver_id', gameServerId);
     }
+    customVariableInputs?.forEach(input => {
+        query.set(`custom_variables[${input.name}]`, input.value)
+    });
 
     var checkoutUrl = `/products/${productSlug}/checkout?${query.toString()}`;
     window.location.href = checkoutUrl;
