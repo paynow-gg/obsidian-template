@@ -107,7 +107,7 @@
                             {% if product.allow_one_time_purchase %}
                             <button onclick="addProductToCart();" class="add-btn">Add to Cart</a>
                             {% endif %}
-                            {% if product.allow_one_time_purchase %}
+                            {% if product.allow_one_time_purchase and not product.is_gifting_disabled %}
                             <button id="giftButton" onclick="toggleGiftActions();" class="add-gift-btn">Gift</button>
                             {% endif %}
                     </div>
