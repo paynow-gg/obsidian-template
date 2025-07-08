@@ -64,7 +64,7 @@ function subscribeToProduct() {
         query.set(`custom_variables[${input.name}]`, input.value)
     });
 
-    const checkoutUrl = `/products/${productSlug}/checkout?${query.toString()}`;
+    const checkoutUrl = `/cart/add/${productSlug}?${query.toString()}`;
     window.location.href = checkoutUrl;
 }
 
