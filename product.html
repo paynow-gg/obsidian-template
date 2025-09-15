@@ -101,15 +101,18 @@
                     </span>
                     {% else %}
                     <div id="mainActions" class="mt-2 flex gap-2">
+                        {% if product.trial.eligible %}
+                            <button onclick="subscribeToProduct(true);" class="add-btn">{{ product.trial.period_value }}-{{ product.trial.period_scale }} Free Trial</a>
+                        {% endif %}
                         {% if product.allow_subscription %}
-                        <button onclick="subscribeToProduct();" class="add-btn">Subscribe</a>
-                            {% endif %}
-                            {% if product.allow_one_time_purchase %}
+                            <button onclick="subscribeToProduct();" class="add-btn">Subscribe</a>
+                        {% endif %}
+                        {% if product.allow_one_time_purchase %}
                             <button onclick="addProductToCart();" class="add-btn">Add to Cart</a>
-                            {% endif %}
-                            {% if product.allow_one_time_purchase and not product.is_gifting_disabled %}
+                        {% endif %}
+                        {% if product.allow_one_time_purchase and not product.is_gifting_disabled %}
                             <button id="giftButton" onclick="toggleGiftActions();" class="add-gift-btn">Gift</button>
-                            {% endif %}
+                        {% endif %}
                     </div>
 
                     <div id="giftActions" class="hidden mt-2 flex gap-2">
